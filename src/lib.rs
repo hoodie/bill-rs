@@ -28,7 +28,6 @@ fn tax_from_f64(float: f64) -> Tax {
 #[derive(Clone, Copy, Debug)]
 pub struct Product<'a> {
     pub name: &'a str,
-    // pub unit: Option<&'a str>,
     pub price: Money,
     pub tax: Tax,
 }
@@ -43,37 +42,51 @@ impl<'a> Product<'a> {
     }
 }
 
-#[derive(Debug)]
-pub struct BillItem<'a> {
-    pub amount: Amount,
-    pub product: Product<'a>,
+pub trait BillProduct{
+    fn price(&self) -> Money;
+    fn name(&self) -> String;
+    fn tax(&self) -> Tax;
 }
 
-impl<'a> BillItem<'a> {
+impl<'a> BillProduct for Product<'a>{
+    fn price(&self) -> Money {self.price}
+    fn name(&self) -> String {self.name.to_owned()}
+    fn tax(&self) -> Tax {self.tax}
+}
+
+#[derive(Debug)]
+pub struct BillItem<P> {
+    pub amount: Amount,
+    pub product: P,
+}
+
+impl<P:BillProduct> BillItem<P> {
 
     pub fn sum(&self) -> Money {
-        self.product.price * self.amount
+        self.product.price() * self.amount
     }
 
 }
 
 #[derive(Debug)]
-pub struct Bill<'a> {
-    pub items_by_tax: MultiMap<Tax, BillItem<'a>>,
+pub struct Bill<P> {
+    pub items_by_tax: MultiMap<Tax, BillItem<P>>,
 }
 
-impl<'a> Bill<'a> {
+impl<P:BillProduct> Bill<P> {
     pub fn new() -> Self {
         Bill { items_by_tax: MultiMap::new() }
     }
 
-    pub fn add_item(&mut self, amount: Amount, product: Product<'a>) {
+    pub fn add_item(&mut self, amount: Amount, product: P) {
+        let tax = product.tax();
+
         let item = BillItem {
             amount: amount,
             product: product,
         };
 
-        self.items_by_tax.insert(product.tax, item);
+        self.items_by_tax.insert(tax, item);
     }
 
     pub fn sums_by_tax(&self) -> BTreeMap<Tax, Currency> {
@@ -81,7 +94,7 @@ impl<'a> Bill<'a> {
             .iter_all()
             .map(|(tax, items)| {
                 (*tax, items.iter()
-                            .map(|i| i.product.price * i.amount)
+                            .map(|i| i.product.price() * i.amount)
                             //.sum() // TODO add Currency
                             .fold(Money::default(), |acc, x| acc + x)
                             )
@@ -94,7 +107,7 @@ impl<'a> Bill<'a> {
             .iter_all()
             .map(|(tax, items)| {
                 (*tax, items.iter()
-                            .map(|i| i.product.price * i.amount * *tax.as_ref())
+                            .map(|i| i.product.price() * i.amount * *tax.as_ref())
                             //.sum()
                             .fold(Money::default(), |acc, x| acc + x)
                             )
@@ -107,7 +120,7 @@ impl<'a> Bill<'a> {
             .iter_all()
             .map(|(tax, items)| {
                 items.iter()
-                    .map(|i| i.product.price * i.amount * (*tax.as_ref()+1.0))
+                    .map(|i| i.product.price() * i.amount * (*tax.as_ref()+1.0))
                     //.sum()
                     .fold(Money::default(), |acc, x| acc + x)
             })
