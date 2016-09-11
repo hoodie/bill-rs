@@ -78,6 +78,11 @@ impl<P:BillProduct> Bill<P> {
         Bill { items_by_tax: MultiMap::new() }
     }
 
+    pub fn add(&mut self, item:BillItem<P>) {
+        let tax = item.product.tax();
+        self.items_by_tax.insert(tax, item);
+    }
+
     pub fn add_item(&mut self, amount: Amount, product: P) {
         let tax = product.tax();
 
