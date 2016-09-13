@@ -78,6 +78,19 @@ impl<P:BillProduct> Bill<P> {
         Bill { items_by_tax: MultiMap::new() }
     }
 
+    pub fn as_items_with_tax(&self) -> Vec<(Tax, &BillItem<P>)> {
+        let mut out = Vec::new();
+
+        for (tax, items) in self.items_by_tax.iter_all(){
+            for item in items.iter(){
+                out.push((tax.to_owned(), item));
+            }
+        }
+
+        out
+    }
+
+
     pub fn add(&mut self, item:BillItem<P>) {
         let tax = item.product.tax();
         self.items_by_tax.insert(tax, item);
@@ -118,6 +131,18 @@ impl<P:BillProduct> Bill<P> {
                             )
             })
             .collect()
+    }
+
+    pub fn total_before_tax(&self) -> Money {
+        self.items_by_tax
+            .iter_all()
+            .map(|(_, items)| {
+                items.iter()
+                    .map(|i| i.product.price() * i.amount)
+                    //.sum()
+                    .fold(Money::default(), |acc, x| acc + x)
+            })
+        .fold(Money::default(), |acc, x| acc + x)
     }
 
     pub fn total(&self) -> Money {
