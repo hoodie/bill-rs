@@ -82,7 +82,7 @@ impl<P:BillProduct> Bill<P> {
 
     pub fn as_items_with_tax(&self) -> Vec<(Tax, &BillItem<P>)> {
         let mut out = Vec::new();
-        for (tax, items) in self.items_by_tax.iter(){
+        for (tax, items) in self.items_by_tax.iter().rev() {
             for item in items.iter(){
                 out.push((tax.to_owned(), item));
             }
