@@ -5,7 +5,6 @@ name = "bill"
 version = "0.1.0"
 
 [dependencies]
-multimap = "*"
 ordered-float = "*"
 claude = {git="https://github.com/hoodie/claude-rs"}
 maplit = {version = "0.1", optional = true}
