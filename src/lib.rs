@@ -108,29 +108,37 @@ impl<P:BillProduct> Bill<P> {
         self.add(item)
     }
 
+    fn sum_costs(items:&[BillItem<P>]) -> Money {
+        items.iter()
+            .map(|i| i.product.price() * i.amount)
+            .fold(Money::default(), |acc, x| acc + x)
+    }
+
+    fn sum_taxes(items:&[BillItem<P>]) -> Money {
+        items.iter()
+            .map(|i| i.product.price() * i.amount * *i.product.tax())
+            .fold(Money::default(), |acc, x| acc + x)
+    }
+
     pub fn sums_by_tax(&self) -> BTreeMap<Tax, Currency> {
         self.items_by_tax
             .iter()
-            .map(|(tax, items)| {
-                (*tax, items.iter()
-                            .map(|i| i.product.price() * i.amount)
-                            //.sum() // TODO add Currency
-                            .fold(Money::default(), |acc, x| acc + x)
-                            )
-            })
+            .map(|(tax, items)| (*tax, Self::sum_costs(&items)) )
             .collect()
     }
 
     pub fn taxes_by_tax(&self) -> BTreeMap<Tax, Money> {
         self.items_by_tax
             .iter()
-            .map(|(tax, items)| {
-                (*tax, items.iter()
-                            .map(|i| i.product.price() * i.amount * *tax.as_ref())
-                            //.sum()
-                            .fold(Money::default(), |acc, x| acc + x)
-                            )
-            })
+            .map(|(tax, items)| (*tax, Self::sum_taxes(&items)) )
+            .collect()
+    }
+
+    pub fn all_by_tax(&self) -> BTreeMap<Tax, (Money,Money)> {
+        self.items_by_tax
+            .iter()
+            .map(|(tax, items)|  (*tax, (Self::sum_costs(&items),
+                                         Self::sum_taxes(&items))) )
             .collect()
     }
 
