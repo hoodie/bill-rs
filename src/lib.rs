@@ -94,27 +94,25 @@ impl<P:BillProduct> Bill<P> {
             .collect()
     }
 
-    pub fn total_before_tax(&self) -> Money {
+    pub fn gross_total(&self) -> Money {
         self.items_by_tax
             .iter()
-            .map(|(_, items)| {
-                items.iter()
-                    .map(|i| i.product.price() * i.amount)
-                    //.sum()
-                    .fold(Money::default(), |acc, x| acc + x)
-            })
+            .map(|(_, items)| items.gross_sum())
         .fold(Money::default(), |acc, x| acc + x)
     }
 
-    pub fn total(&self) -> Money {
+    pub fn tax_total(&self) -> Money {
         self.items_by_tax
             .iter()
-            .map(|(tax, items)| {
-                items.iter()
-                    .map(|i| i.product.price() * i.amount * (*tax.as_ref()+1.0))
-                    //.sum()
-                    .fold(Money::default(), |acc, x| acc + x)
-            })
+            .map(|(_, items)| items.tax_sum())
         .fold(Money::default(), |acc, x| acc + x)
     }
+
+    pub fn net_total(&self) -> Money {
+        self.items_by_tax
+            .iter()
+            .map(|(_, items)| items.net_sum())
+        .fold(Money::default(), |acc, x| acc + x)
+    }
+
 }
