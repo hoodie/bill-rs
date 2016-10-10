@@ -18,20 +18,19 @@ impl<P:BillProduct> ItemList<P> {
 
     pub fn gross_sum(&self) -> Money {
         self.items.iter()
-            .map(|i|i.cost())
+            .map(|i|i.gross())
             .fold(Money::default(), |acc, x| acc + x)
     }
 
+    /// this assumes that all items have the same tax
     pub fn tax_sum(&self) -> Money{
-        self.items.iter()
-            .map(|i|i.tax())
-            .fold(Money::default(), |acc, x| acc + x)
+        if let Some(tax) = self.items.get(0).map(|i|i.product.tax()){
+            self.gross_sum() * *tax
+        } else {Money::default()}
     }
 
     pub fn net_sum(&self) -> Money{
-        self.items.iter()
-            .map(|i|i.net())
-            .fold(Money::default(), |acc, x| acc + x)
+        self.gross_sum() + self.tax_sum()
     }
 
     pub fn push(&mut self, item:BillItem<P>){

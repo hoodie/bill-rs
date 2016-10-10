@@ -8,18 +8,18 @@ pub struct BillItem<P> {
 }
 
 impl<P:BillProduct> BillItem<P> {
-    /// price * amount
-    pub fn cost(&self) -> Money {
+    /// `price * amount`
+    pub fn gross(&self) -> Money {
         self.product.price() * self.amount
     }
 
-    /// price * tax * amount
+    /// `price * tax * amount`, tax being less than 1.0
     pub fn tax(&self) -> Money {
         self.product.price() * *self.product.tax() * self.amount
     }
 
-    /// cost + tax
+    /// `gross + tax`
     pub fn net(&self) -> Money {
-        self.cost() + self.tax()
+        self.gross() + self.tax()
     }
 }
