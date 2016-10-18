@@ -6,6 +6,6 @@ version = "0.1.0"
 
 [dependencies]
 ordered-float = "*"
-claude = {git="https://github.com/hoodie/claude-rs"}
+claude = "0.1.0"
 maplit = {version = "0.1", optional = true}
 
