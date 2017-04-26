@@ -5,7 +5,7 @@ name = "bill"
 version = "0.1.0"
 
 [dependencies]
-ordered-float = "*"
-claude = "0.1.0"
+ordered-float = "0.4"
+claude = "0.1"
 maplit = {version = "0.1", optional = true}
 
