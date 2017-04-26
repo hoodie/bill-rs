@@ -61,11 +61,6 @@ impl<P:BillProduct> Bill<P> {
         out
     }
 
-    pub fn items_by_tax(&self) -> BTreeMap<Tax, ItemList<P>> {
-        unimplemented!()
-    }
-
-
     /// TODO Make this return an `Iterator`
     pub fn as_items(&self) -> Vec<&BillItem<P>> {
         self.as_items_with_tax().into_iter().map(|(_,item)|item).collect()
@@ -87,7 +82,7 @@ impl<P:BillProduct> Bill<P> {
         self.add(item)
     }
 
-    pub fn sums_by_tax(&self) -> BTreeMap<Tax, Currency> {
+    pub fn sums_by_tax(&self) -> BTreeMap<Tax, Money> {
         self.items_by_tax
             .iter()
             .map(|(tax, items)| (*tax, items.gross_sum()) )
