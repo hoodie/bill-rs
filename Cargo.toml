@@ -1,8 +1,8 @@
 [package]
 authors = ["Hendrik Sollich <hendrik@hoodie.de>"]
-description = "A minimal library for creating invoices. Feel free to review and correct it."
+description = "💸 A minimal library for creating invoices. Feel free to review and correct it."
 name = "bill"
-version = "0.1.0"
+version = "0.1.1"
 
 [dependencies]
 ordered-float = "0.4"
