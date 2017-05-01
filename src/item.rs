@@ -1,7 +1,7 @@
 use super::{Money, Amount, BillProduct};
 
 /// Mapps a `BillProduct` to an amount.
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct BillItem<P> {
     pub amount: Amount,
     pub product: P,

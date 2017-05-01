@@ -5,6 +5,11 @@
 
 extern crate ordered_float;
 extern crate claude;
+extern crate serde;
+extern crate serde_json;
+#[macro_use] extern crate serde_derive;
+
+use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 pub use claude::Currency;
 
@@ -27,20 +32,10 @@ pub type Amount = f64;
 pub type Money = Currency;
 
 /// This is where the magic happens.
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct Bill<P> {
     pub items_by_tax: BTreeMap<Tax, ItemList<P>>,
 }
-
-//impl Serialize for Tax{
-//    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-//        where S: Serializer
-//    {
-//        let mut s = serializer.serialize_struct("Tax", 1)?;
-//        s.serialize_field("value", &self.into_inner())?;
-//        s.end()
-//    }
-//}
 
 impl<P: BillProduct> Deref for Bill<P> {
     type Target = BTreeMap<Tax, ItemList<P>>;

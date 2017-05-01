@@ -1,4 +1,5 @@
 use super::{Money, Tax};
+use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 /// Describes one particular product.
 /// Amount is handled by `BillItem`
@@ -9,6 +10,18 @@ pub struct Product<'a> {
     pub name: &'a str,
     pub price: Money,
     pub tax: Tax,
+}
+
+impl<'a> Serialize for Product<'a>{
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where S: Serializer
+    {
+        let mut s = serializer.serialize_struct("Product", 3)?;
+        s.serialize_field("name", &self.name)?;
+        s.serialize_field("price", &self.price.as_float())?;
+        s.serialize_field("tax", &self.tax)?;
+        s.end()
+    }
 }
 
 impl<'a> Product<'a> {

@@ -1,8 +1,10 @@
 use ordered_float::OrderedFloat;
+use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 use std::fmt;
 use std::cmp::{PartialOrd, Ord, PartialEq, Eq, Ordering};
 use std::ops::Deref;
+
 
 /// Representation of Tax value
 #[derive(Copy, Clone, Debug)]
@@ -11,6 +13,14 @@ pub struct Tax(OrderedFloat<f64>);
 impl Tax {
     pub fn new(float: f64) -> Self {
         Tax(OrderedFloat(float))
+    }
+}
+
+impl Serialize for Tax{
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where S: Serializer
+    {
+        self.0.as_ref().to_string().serialize(serializer)
     }
 }
 

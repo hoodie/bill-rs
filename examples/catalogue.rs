@@ -1,6 +1,7 @@
 #![allow(unused_variables)]
 extern crate bill;
 extern crate ordered_float;
+extern crate serde_json;
 
 use bill::*;
 
@@ -30,7 +31,7 @@ fn print(title: &str, bill: &Bill<Product>) {
 }
 
 fn main() {
-    let kaffee       = Product::new("Coffee", c(0250), 0.19);
+    let coffee       = Product::new("Coffee", c(0250), 0.19);
     let tee          = Product::new("Tea", c(0175), 0.19);
     let water        = Product::new("Water", c(0061), 0.19);
     let applejuice   = Product::new("AppleJuice", c(0164), 0.19);
@@ -63,4 +64,5 @@ fn main() {
     print("offer", &offer);
     print("invoice", &invoice);
     print("invoice2", &invoice2);
+    println!("{}", serde_json::to_string(&invoice2).unwrap());
 }

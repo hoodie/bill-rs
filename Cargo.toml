@@ -12,3 +12,13 @@ ordered-float = "0.4"
 claude = "0.1"
 maplit = {version = "0.1", optional = true}
 
+
+
+
+serde = {version = "*", optional=true}
+serde_json = {version = "*", optional=true}
+serde_derive = {version = "*", optional=true}
+
+[features]
+default = ["serialization"]
+serialization = ["serde", "serde_json", "serde_derive"]
