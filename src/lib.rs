@@ -6,7 +6,6 @@
 extern crate ordered_float;
 extern crate claude;
 
-use ordered_float::OrderedFloat;
 pub use claude::Currency;
 
 use std::collections::BTreeMap;
@@ -21,17 +20,27 @@ pub use product::{Product, BillProduct};
 mod item;
 pub use item::BillItem;
 
-/// Representation of Tax value
-pub type Tax = OrderedFloat<f64>;
+mod tax;
+pub use tax::Tax;
+
 pub type Amount = f64;
 pub type Money = Currency;
-
 
 /// This is where the magic happens.
 #[derive(Debug)]
 pub struct Bill<P> {
     pub items_by_tax: BTreeMap<Tax, ItemList<P>>,
 }
+
+//impl Serialize for Tax{
+//    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+//        where S: Serializer
+//    {
+//        let mut s = serializer.serialize_struct("Tax", 1)?;
+//        s.serialize_field("value", &self.into_inner())?;
+//        s.end()
+//    }
+//}
 
 impl<P: BillProduct> Deref for Bill<P> {
     type Target = BTreeMap<Tax, ItemList<P>>;

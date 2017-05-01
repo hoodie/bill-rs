@@ -15,7 +15,7 @@ impl<P:BillProduct> BillItem<P> {
 
     /// `price * tax * amount`, tax being less than 1.0
     pub fn tax(&self) -> Money {
-        self.product.price() * *self.product.tax() * self.amount
+        self.product.price() * **self.product.tax() * self.amount
     }
 
     /// `gross + tax`

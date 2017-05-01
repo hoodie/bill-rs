@@ -1,16 +1,10 @@
 use super::{Money, Tax};
 
-use ordered_float::OrderedFloat;
-
-fn tax_from_f64(float: f64) -> Tax {
-    OrderedFloat(float)
-}
-
-#[derive(Clone, Copy, Debug)]
 /// Describes one particular product.
 /// Amount is handled by `BillItem`
 ///
 /// You can write your own product, just implement `BillProduct`
+#[derive(Clone, Copy, Debug)]
 pub struct Product<'a> {
     pub name: &'a str,
     pub price: Money,
@@ -24,7 +18,7 @@ impl<'a> Product<'a> {
         Product {
             name: name,
             price: price,
-            tax: tax_from_f64(tax),
+            tax: Tax::new(tax),
         }
     }
 }

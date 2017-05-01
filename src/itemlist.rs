@@ -25,7 +25,7 @@ impl<P:BillProduct> ItemList<P> {
     /// this assumes that all items have the same tax
     pub fn tax_sum(&self) -> Money{
         if let Some(tax) = self.items.get(0).map(|i|i.product.tax()){
-            self.gross_sum() * *tax
+            self.gross_sum() * **tax
         } else {Money::default()}
     }
 
