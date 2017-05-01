@@ -5,10 +5,11 @@
 
 extern crate ordered_float;
 extern crate claude;
-extern crate serde;
-extern crate serde_json;
-#[macro_use] extern crate serde_derive;
+#[cfg(feature="serialization")] extern crate serde;
+#[cfg(feature="serialization")] extern crate serde_json;
+#[cfg(feature="serialization")] #[macro_use] extern crate serde_derive;
 
+#[cfg(feature="serialization")]
 use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 pub use claude::Currency;
@@ -32,7 +33,8 @@ pub type Amount = f64;
 pub type Money = Currency;
 
 /// This is where the magic happens.
-#[derive(Debug, Serialize)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serialization", derive(Serialize))]
 pub struct Bill<P> {
     pub items_by_tax: BTreeMap<Tax, ItemList<P>>,
 }

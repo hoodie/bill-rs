@@ -20,5 +20,5 @@ serde_json = {version = "*", optional=true}
 serde_derive = {version = "*", optional=true}
 
 [features]
-default = ["serialization"]
+default = []
 serialization = ["serde", "serde_json", "serde_derive"]

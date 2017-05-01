@@ -1,4 +1,5 @@
 use ordered_float::OrderedFloat;
+#[cfg(feature="serialization")]
 use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 use std::fmt;
@@ -16,6 +17,7 @@ impl Tax {
     }
 }
 
+#[cfg(feature="serialization")]
 impl Serialize for Tax{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
         where S: Serializer

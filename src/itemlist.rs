@@ -2,7 +2,8 @@ use super::{BillItem, BillProduct, Money};
 use std::ops::Deref;
 
 /// A list of `BillItem`s, implements summing methods.
-#[derive(Debug, Serialize)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serialization", derive(Serialize))]
 pub struct ItemList<P> {
     items: Vec<BillItem<P>>
 }

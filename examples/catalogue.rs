@@ -1,7 +1,7 @@
-#![allow(unused_variables)]
+#![allow(dead_code,unused_variables)]
 extern crate bill;
 extern crate ordered_float;
-extern crate serde_json;
+#[cfg(feature="serialization")] extern crate serde_json;
 
 use bill::*;
 
@@ -61,8 +61,16 @@ fn main() {
     let mut invoice2 = Bill::new();
     invoice2.add_item(99.0, Product::new("Red Ballons", c(99), 0.19));
 
-    print("offer", &offer);
-    print("invoice", &invoice);
-    print("invoice2", &invoice2);
-    println!("{}", serde_json::to_string(&invoice2).unwrap());
+    #[cfg(not(feature="serialization"))]
+    {
+        print("offer", &offer);
+        print("invoice", &invoice);
+        print("invoice2", &invoice2);
+    }
+    #[cfg(feature="serialization")]
+    {
+        println!("{}", serde_json::to_string(&offer).unwrap());
+        println!("{}", serde_json::to_string(&invoice).unwrap());
+        println!("{}", serde_json::to_string(&invoice2).unwrap());
+    }
 }

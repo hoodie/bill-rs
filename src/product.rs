@@ -1,4 +1,5 @@
 use super::{Money, Tax};
+#[cfg(feature="serialization")]
 use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 /// Describes one particular product.
@@ -12,6 +13,7 @@ pub struct Product<'a> {
     pub tax: Tax,
 }
 
+#[cfg(feature="serialization")]
 impl<'a> Serialize for Product<'a>{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
         where S: Serializer
