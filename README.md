@@ -1,7 +1,10 @@
 # 💸 Bill
 
 [![Travis](https://img.shields.io/travis/hoodie/bill-rs.svg)](https://travis-ci.org/hoodie/bill-rs/)
+[![license](https://img.shields.io/crates/l/bill.svg)](https://crates.io/crates/bill/)
 [![Crates.io](https://img.shields.io/crates/d/bill.svg)](https://crates.io/crates/bill)
+[![version](https://img.shields.io/crates/v/bill.svg)](https://crates.io/crates/bill/)
+[![documentation](https://docs.rs/bill/badge.svg)](https://docs.rs/bill/)
 
 Tiny little billing library.
 
