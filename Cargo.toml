@@ -1,7 +1,7 @@
 [package]
 authors = ["Hendrik Sollich <hendrik@hoodie.de>"]
 name = "bill"
-version = "0.1.1"
+version = "0.2.0"
 license = "MIT/Apache-2.0"
 
 description = "💸 A minimal library for creating invoices. Feel free to review and correct it."
@@ -9,11 +9,9 @@ keywords = ["Money", "Billing"]
 
 [dependencies]
 ordered-float = "0.4"
-claude = "0.1"
+#claude = "0.2"
+claude = {path = "../claude-rs", features=["serialization"]}
 maplit = {version = "0.1", optional = true}
-
-
-
 
 serde = {version = "*", optional=true}
 serde_json = {version = "*", optional=true}

@@ -5,6 +5,7 @@ use serde::ser::{Serialize, Serializer, SerializeStruct};
 use std::fmt;
 use std::cmp::{PartialOrd, Ord, PartialEq, Eq, Ordering};
 use std::ops::Deref;
+use std::convert;
 
 
 /// Representation of Tax value
@@ -12,8 +13,12 @@ use std::ops::Deref;
 pub struct Tax(OrderedFloat<f64>);
 
 impl Tax {
-    pub fn new(float: f64) -> Self {
-        Tax(OrderedFloat(float))
+    pub fn new(value: f64) -> Self {
+        Tax(OrderedFloat(value))
+    }
+
+    pub fn value(&self) -> f64 {
+        *self.0.as_ref()
     }
 }
 
@@ -59,4 +64,15 @@ impl fmt::Display for Tax {
 }
 
 
+impl convert::Into<f64> for Tax {
+    fn into(self) -> f64 {
+        self.0.into_inner()
+    }
+}
 
+
+impl convert::From<f64> for Tax {
+    fn from(value:f64) -> Tax {
+        Tax::new(value)
+    }
+}
