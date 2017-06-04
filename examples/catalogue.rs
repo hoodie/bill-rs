@@ -6,7 +6,10 @@ extern crate ordered_float;
 use bill::*;
 
 fn c(value: i64) -> Currency {
-    Currency(Some('€'), value)
+    Currency {
+        symbol: Some('€'),
+        .. Currency::from_value(value)
+    }
 }
 
 fn print_items(items: &[BillItem<Product>]) {
