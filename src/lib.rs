@@ -8,9 +8,6 @@ extern crate claude;
 #[cfg(feature="serialization")] extern crate serde_json;
 #[cfg(feature="serialization")] #[macro_use] extern crate serde_derive;
 
-#[cfg(feature="serialization")]
-use serde::ser::{Serialize, Serializer, SerializeStruct};
-
 pub use claude::Currency;
 
 mod bill;

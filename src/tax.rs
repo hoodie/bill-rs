@@ -1,6 +1,6 @@
 use ordered_float::OrderedFloat;
 #[cfg(feature="serialization")]
-use serde::ser::{Serialize, Serializer, SerializeStruct};
+use serde::ser::{Serialize, Serializer};
 
 use std::fmt;
 use std::cmp::{PartialOrd, Ord, PartialEq, Eq, Ordering};
