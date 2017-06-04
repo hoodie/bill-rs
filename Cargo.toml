@@ -10,7 +10,7 @@ keywords = ["Money", "Billing"]
 [dependencies]
 ordered-float = "0.5"
 #claude = "0.2"
-claude = {path = "../claude-rs", features=["serialization"]}
+claude = {version = "0.2", features=["serialization"]}
 maplit = {version = "0.1", optional = true}
 
 serde = {version = "*", optional=true}
