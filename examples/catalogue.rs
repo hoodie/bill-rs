@@ -35,7 +35,7 @@ fn main() {
     let tee          = Product::new("Tea", c(0175), 0.19);
     let water        = Product::new("Water", c(0061), 0.19);
     let applejuice   = Product::new("AppleJuice", c(0164), 0.19);
-    let orangejuice  = Product::new("OrangenJuice", c(0186), 0.19);
+    let orangejuice  = Product::new("OrangeJuice", c(0186), 0.19);
     let bagel        = Product::new("Bagel", c(0219), 0.19);
     let sandwich     = Product::new("Sandwich", c(0340), 0.19);
     let pie          = Product::new("pie", c(0094), 0.19);
@@ -69,8 +69,8 @@ fn main() {
     }
     #[cfg(feature="serialization")]
     {
-        println!("{}", serde_json::to_string(&offer).unwrap());
-        println!("{}", serde_json::to_string(&invoice).unwrap());
-        println!("{}", serde_json::to_string(&invoice2).unwrap());
+        println!("{:#?}", serde_json::to_value(&offer).unwrap());
+        println!("{:#?}", serde_json::to_value(&invoice).unwrap());
+        println!("{:#?}", serde_json::to_value(&invoice2).unwrap());
     }
 }

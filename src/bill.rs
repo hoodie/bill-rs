@@ -1,4 +1,4 @@
-use super::{Money,Amount, ItemList, BillItem, BillProduct};
+use super::{Money, Amount, ItemList, BillItem, BillProduct};
 use tax::Tax;
 
 use std::collections::BTreeMap;
@@ -18,7 +18,7 @@ impl<P: BillProduct> Deref for Bill<P> {
     }
 }
 
-impl<P:BillProduct> Bill<P> {
+impl<P: BillProduct> Bill<P> {
     /// Instantiates a new `Bill`
     pub fn new() -> Self {
         Bill { items_by_tax: BTreeMap::new() }
@@ -28,24 +28,24 @@ impl<P:BillProduct> Bill<P> {
         self.as_items_with_tax().into_iter().collect()
     }
 
-    /// TODO Make this return an `Iterator`
+    /// Returns a `Vec` of `Tax` and `BillItem`
     pub fn as_items_with_tax(&self) -> Vec<(Tax, &BillItem<P>)> {
         let mut out = Vec::new();
         for (tax, items) in self.items_by_tax.iter().rev() {
-            for item in items.iter(){
+            for item in items.iter() {
                 out.push((tax.to_owned(), item));
             }
         }
         out
     }
 
-    /// TODO Make this return an `Iterator`
+    /// Returns a `Vec` of `BillItem`
     pub fn as_items(&self) -> Vec<&BillItem<P>> {
-        self.as_items_with_tax().into_iter().map(|(_,item)|item).collect()
+        self.as_items_with_tax().into_iter().map(|(_, item)| item).collect()
     }
 
     /// Adds a new `BillItem` to the list.
-    pub fn add(&mut self, item:BillItem<P>) {
+    pub fn add(&mut self, item: BillItem<P>) {
         let tax = item.product.tax();
         self.items_by_tax.entry(tax).or_insert_with(ItemList::new).push(item);
     }
@@ -63,7 +63,7 @@ impl<P:BillProduct> Bill<P> {
     pub fn sums_by_tax(&self) -> BTreeMap<Tax, Money> {
         self.items_by_tax
             .iter()
-            .map(|(tax, items)| (*tax, items.gross_sum()) )
+            .map(|(tax, items)| (*tax, items.gross_sum()))
             .collect()
     }
 
@@ -71,21 +71,20 @@ impl<P:BillProduct> Bill<P> {
         self.items_by_tax
             .iter()
             .map(|(_, items)| items.gross_sum())
-        .fold(Money::default(), |acc, x| acc + x)
+            .fold(Money::default(), |acc, x| acc + x)
     }
 
     pub fn tax_total(&self) -> Money {
         self.items_by_tax
             .iter()
             .map(|(_, items)| items.tax_sum())
-        .fold(Money::default(), |acc, x| acc + x)
+            .fold(Money::default(), |acc, x| acc + x)
     }
 
     pub fn net_total(&self) -> Money {
         self.items_by_tax
             .iter()
             .map(|(_, items)| items.net_sum())
-        .fold(Money::default(), |acc, x| acc + x)
+            .fold(Money::default(), |acc, x| acc + x)
     }
-
 }

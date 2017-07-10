@@ -22,7 +22,7 @@ offer:
   0.19%
   *   8x Water           0,61€ 4,88€
   *   4x AppleJuice      1,64€ 6,56€
-  *   4x OrangenJuice    1,86€ 7,44€
+  *   4x OrangeJuice    1,86€ 7,44€
   *   40x Sandwich        3,40€ 136,00€
 ---------------------------------------
        170,88€
@@ -49,7 +49,7 @@ cargo run --example catalogue --features serialization
     "items": [
       {"amount":8.0,"product":{"name":"Water","price":0.61,"tax":"0.19"}},
       {"amount":4.0,"product":{"name":"AppleJuice","price":1.64,"tax":"0.19"}},
-      {"amount":4.0,"product":{"name":"OrangenJuice","price":1.86,"tax":"0.19"}},{"amount":40.0,"product":{"name":"Sandwich","price":3.4,"tax":"0.19"}}
+      {"amount":4.0,"product":{"name":"OrangeJuice","price":1.86,"tax":"0.19"}},{"amount":40.0,"product":{"name":"Sandwich","price":3.4,"tax":"0.19"}}
     ]
    }
 }}
