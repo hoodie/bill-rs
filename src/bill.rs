@@ -5,7 +5,7 @@ use std::collections::BTreeMap;
 use std::ops::Deref;
 
 /// This is where the magic happens.
-#[derive(Debug)]
+#[derive(Debug, Default)]
 #[cfg_attr(feature = "serialization", derive(Serialize))]
 pub struct Bill<P> {
     pub items_by_tax: BTreeMap<Tax, ItemList<P>>,
@@ -53,8 +53,8 @@ impl<P: BillProduct> Bill<P> {
     /// Instantiates and adds a new `BillItem` to the list.
     pub fn add_item(&mut self, amount: Amount, product: P) {
         let item = BillItem {
-            amount: amount,
-            product: product,
+            amount,
+            product,
         };
 
         self.add(item)

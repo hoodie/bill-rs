@@ -1,5 +1,5 @@
 use super::{Money, Tax};
-#[cfg(feature="serialization")]
+#[cfg(feature = "serialization")]
 use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 /// Describes one particular product.
@@ -13,8 +13,8 @@ pub struct Product<'a> {
     pub tax: Tax,
 }
 
-#[cfg(feature="serialization")]
-impl<'a> Serialize for Product<'a>{
+#[cfg(feature = "serialization")]
+impl<'a> Serialize for Product<'a> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
         where S: Serializer
     {
@@ -27,12 +27,11 @@ impl<'a> Serialize for Product<'a>{
 }
 
 impl<'a> Product<'a> {
-
     /// Instantiates a new Product.
     pub fn new(name: &'a str, price: Money, tax: f64) -> Self {
         Product {
-            name: name,
-            price: price,
+            name,
+            price,
             tax: Tax::new(tax),
         }
     }
@@ -56,9 +55,13 @@ pub trait BillProduct {
 }
 
 impl<'a> BillProduct for Product<'a> {
-    fn price(&self) -> Money {self.price}
-    fn name(&self) -> String {self.name.to_owned()}
-    fn tax(&self) -> Tax {self.tax}
+    fn price(&self) -> Money {
+        self.price
+    }
+    fn name(&self) -> String {
+        self.name.to_owned()
+    }
+    fn tax(&self) -> Tax {
+        self.tax
+    }
 }
-
-

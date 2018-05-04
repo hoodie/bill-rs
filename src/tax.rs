@@ -1,11 +1,11 @@
 use ordered_float::OrderedFloat;
-#[cfg(feature="serialization")]
+#[cfg(feature = "serialization")]
 use serde::ser::{Serialize, Serializer};
 
-use std::fmt;
 use std::cmp::{PartialOrd, Ord, PartialEq, Eq, Ordering};
-use std::ops::Deref;
 use std::convert;
+use std::fmt;
+use std::ops::Deref;
 
 
 /// Representation of Tax value
@@ -22,8 +22,8 @@ impl Tax {
     }
 }
 
-#[cfg(feature="serialization")]
-impl Serialize for Tax{
+#[cfg(feature = "serialization")]
+impl Serialize for Tax {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
         where S: Serializer
     {
@@ -44,6 +44,7 @@ impl PartialEq for Tax {
         self.0.eq(&other.0)
     }
 }
+
 impl PartialOrd for Tax {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         self.0.partial_cmp(&other.0)
@@ -72,7 +73,7 @@ impl convert::Into<f64> for Tax {
 
 
 impl convert::From<f64> for Tax {
-    fn from(value:f64) -> Tax {
+    fn from(value: f64) -> Tax {
         Tax::new(value)
     }
 }
