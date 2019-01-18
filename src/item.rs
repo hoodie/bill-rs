@@ -1,8 +1,11 @@
+#[cfg(feature = "serde")]
+use serde::Serialize;
+
 use super::{Money, Amount, BillProduct};
 
 /// Maps a `BillProduct` to an amount.
 #[derive(Debug)]
-#[cfg_attr(feature = "serialization", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct BillItem<P> {
     pub amount: Amount,
     pub product: P,

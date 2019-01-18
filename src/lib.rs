@@ -2,28 +2,22 @@
 //!
 //! Please check out `examples/catalogue.rs`
 
-extern crate ordered_float;
-extern crate claude;
-#[cfg(feature="serialization")] extern crate serde;
-#[cfg(feature="serialization")] extern crate serde_json;
-#[cfg(feature="serialization")] #[macro_use] extern crate serde_derive;
-
 pub use claude::Currency;
 
 mod bill;
-pub use bill::Bill;
+pub use crate::bill::Bill;
 
 mod itemlist;
-pub use itemlist::ItemList;
+pub use crate::itemlist::ItemList;
 
 mod product;
-pub use product::{Product, BillProduct};
+pub use crate::product::{Product, BillProduct};
 
 mod item;
-pub use item::BillItem;
+pub use crate::item::BillItem;
 
 mod tax;
-pub use tax::Tax;
+pub use crate::tax::Tax;
 
 /// Representation of Item quantities.
 pub type Amount = f64;

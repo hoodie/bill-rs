@@ -1,6 +1,4 @@
-#![allow(dead_code,unused_variables)]
-extern crate bill;
-extern crate ordered_float;
+#![allow(dead_code, unused_variables)]
 #[cfg(feature="serialization")] extern crate serde_json;
 
 use bill::*;
@@ -9,14 +7,14 @@ fn c(value: i64) -> Currency {
     Currency::from(('€', value))
 }
 
-fn print_items(items: &[BillItem<Product>]) {
+fn print_items(items: &[BillItem<Product<'_>>]) {
     //println!("{:?}", items);
     for item in items {
         println!("   * {:3}x {:15} {:6} {:6}", item.amount, item.product.name, item.product.price.postfix(), item.gross().postfix());
     }
 }
 
-fn print(title: &str, bill: &Bill<Product>) {
+fn print(title: &str, bill: &Bill<Product<'_>>) {
 
     println!("{}:", title);
     for (tax,items) in &bill.items_by_tax {
@@ -69,8 +67,8 @@ fn main() {
     }
     #[cfg(feature="serialization")]
     {
-        println!("{:#?}", serde_json::to_value(&offer).unwrap());
-        println!("{:#?}", serde_json::to_value(&invoice).unwrap());
-        println!("{:#?}", serde_json::to_value(&invoice2).unwrap());
+        println!("{}", serde_json::to_string_pretty(&offer).unwrap());
+        println!("{}", serde_json::to_string_pretty(&invoice).unwrap());
+        println!("{}", serde_json::to_string_pretty(&invoice2).unwrap());
     }
 }

@@ -1,12 +1,15 @@
+#[cfg(feature = "serde")]
+use serde::Serialize;
+
 use super::{Money, Amount, ItemList, BillItem, BillProduct};
-use tax::Tax;
+use crate::tax::Tax;
 
 use std::collections::BTreeMap;
 use std::ops::Deref;
 
 /// This is where the magic happens.
 #[derive(Debug, Default)]
-#[cfg_attr(feature = "serialization", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Bill<P> {
     pub items_by_tax: BTreeMap<Tax, ItemList<P>>,
 }

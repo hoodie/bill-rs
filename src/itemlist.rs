@@ -1,9 +1,12 @@
+#[cfg(feature = "serde")]
+use serde::Serialize;
+
 use super::{BillItem, BillProduct, Money};
 use std::ops::Deref;
 
 /// A list of `BillItem`s, implements summing methods.
 #[derive(Debug)]
-#[cfg_attr(feature = "serialization", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ItemList<P> {
     items: Vec<BillItem<P>>,
 }
