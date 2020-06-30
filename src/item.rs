@@ -1,7 +1,7 @@
 #[cfg(feature = "serde")]
 use serde::Serialize;
 
-use super::{Money, Amount, BillProduct};
+use super::{Amount, BillProduct, Money};
 
 /// Maps a `BillProduct` to an amount.
 #[derive(Debug)]
@@ -11,7 +11,7 @@ pub struct BillItem<P> {
     pub product: P,
 }
 
-impl<P:BillProduct> BillItem<P> {
+impl<P: BillProduct> BillItem<P> {
     /// `price * amount`
     pub fn gross(&self) -> Money {
         self.product.price() * self.amount

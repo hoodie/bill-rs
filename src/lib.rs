@@ -11,7 +11,7 @@ mod itemlist;
 pub use crate::itemlist::ItemList;
 
 mod product;
-pub use crate::product::{Product, BillProduct};
+pub use crate::product::{BillProduct, Product};
 
 mod item;
 pub use crate::item::BillItem;
@@ -23,4 +23,3 @@ pub use crate::tax::Tax;
 pub type Amount = f64;
 /// Alias for `Currency`.
 pub type Money = Currency;
-

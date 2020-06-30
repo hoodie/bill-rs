@@ -1,5 +1,6 @@
 #![allow(dead_code, unused_variables)]
-#[cfg(feature="serialization")] extern crate serde_json;
+#[cfg(feature = "serialization")]
+extern crate serde_json;
 
 use bill::*;
 
@@ -10,14 +11,19 @@ fn c(value: i64) -> Currency {
 fn print_items(items: &[BillItem<Product<'_>>]) {
     //println!("{:?}", items);
     for item in items {
-        println!("   * {:3}x {:15} {:6} {:6}", item.amount, item.product.name, item.product.price.postfix(), item.gross().postfix());
+        println!(
+            "   * {:3}x {:15} {:6} {:6}",
+            item.amount,
+            item.product.name,
+            item.product.price.postfix(),
+            item.gross().postfix()
+        );
     }
 }
 
 fn print(title: &str, bill: &Bill<Product<'_>>) {
-
     println!("{}:", title);
-    for (tax,items) in &bill.items_by_tax {
+    for (tax, items) in &bill.items_by_tax {
         println!("  {}%", tax);
         print_items(items);
     }
@@ -29,17 +35,16 @@ fn print(title: &str, bill: &Bill<Product<'_>>) {
 }
 
 fn main() {
-    let coffee       = Product::new("Coffee", c(0250), 0.19);
-    let tee          = Product::new("Tea", c(0175), 0.19);
-    let water        = Product::new("Water", c(0061), 0.19);
-    let applejuice   = Product::new("AppleJuice", c(0164), 0.19);
-    let orangejuice  = Product::new("OrangeJuice", c(0186), 0.19);
-    let bagel        = Product::new("Bagel", c(0219), 0.19);
-    let sandwich     = Product::new("Sandwich", c(0340), 0.19);
-    let pie          = Product::new("pie", c(0094), 0.19);
-    let soup         = Product::new("Soup", c(0310), 0.19);
-    let service      = Product::new("Service", c(0800), 0.00);
-
+    let coffee = Product::new("Coffee", c(0250), 0.19);
+    let tee = Product::new("Tea", c(0175), 0.19);
+    let water = Product::new("Water", c(0061), 0.19);
+    let applejuice = Product::new("AppleJuice", c(0164), 0.19);
+    let orangejuice = Product::new("OrangeJuice", c(0186), 0.19);
+    let bagel = Product::new("Bagel", c(0219), 0.19);
+    let sandwich = Product::new("Sandwich", c(0340), 0.19);
+    let pie = Product::new("pie", c(0094), 0.19);
+    let soup = Product::new("Soup", c(0310), 0.19);
+    let service = Product::new("Service", c(0800), 0.00);
 
     let mut offer = Bill::new();
     offer.add_item(8., water);
@@ -47,7 +52,6 @@ fn main() {
     offer.add_item(4., orangejuice);
     offer.add_item(40., sandwich);
     offer.add_item(2., service);
-
 
     let mut invoice = Bill::new();
     invoice.add_item(2., water);
@@ -59,13 +63,13 @@ fn main() {
     let mut invoice2 = Bill::new();
     invoice2.add_item(99.0, Product::new("Red Ballons", c(99), 0.19));
 
-    #[cfg(not(feature="serialization"))]
+    #[cfg(not(feature = "serialization"))]
     {
         print("offer", &offer);
         print("invoice", &invoice);
         print("invoice2", &invoice2);
     }
-    #[cfg(feature="serialization")]
+    #[cfg(feature = "serialization")]
     {
         println!("{}", serde_json::to_string_pretty(&offer).unwrap());
         println!("{}", serde_json::to_string_pretty(&invoice).unwrap());

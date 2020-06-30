@@ -17,7 +17,7 @@ impl<P: BillProduct> ItemList<P> {
     }
 
     pub fn new() -> Self {
-        ItemList { items: Vec::new() }
+        Default::default()
     }
 
     pub fn gross_sum(&self) -> Money {
@@ -45,6 +45,11 @@ impl<P: BillProduct> ItemList<P> {
     }
 }
 
+impl<P: BillProduct> Default for ItemList<P> {
+    fn default() -> ItemList<P> {
+        ItemList { items: Vec::new() }
+    }
+}
 
 impl<P: BillProduct> Deref for ItemList<P> {
     type Target = [BillItem<P>];

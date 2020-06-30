@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::ser::{Serialize, Serializer, SerializeStruct};
+use serde::ser::{Serialize, SerializeStruct, Serializer};
 
 use super::{Money, Tax};
 
@@ -17,7 +17,8 @@ pub struct Product<'a> {
 #[cfg(feature = "serde")]
 impl<'a> Serialize for Product<'a> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        where S: Serializer
+    where
+        S: Serializer,
     {
         let mut s = serializer.serialize_struct("Product", 3)?;
         s.serialize_field("name", &self.name)?;

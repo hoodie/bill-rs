@@ -2,11 +2,10 @@ use ordered_float::OrderedFloat;
 #[cfg(feature = "serialization")]
 use serde::ser::{Serialize, Serializer};
 
-use std::cmp::{PartialOrd, Ord, PartialEq, Eq, Ordering};
+use std::cmp::{Eq, Ord, Ordering, PartialEq, PartialOrd};
 use std::convert;
 use std::fmt;
 use std::ops::Deref;
-
 
 /// Representation of Tax value
 #[derive(Copy, Clone, Debug)]
@@ -25,7 +24,8 @@ impl Tax {
 #[cfg(feature = "serialization")]
 impl Serialize for Tax {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        where S: Serializer
+    where
+        S: Serializer,
     {
         self.0.as_ref().to_string().serialize(serializer)
     }
@@ -64,13 +64,11 @@ impl fmt::Display for Tax {
     }
 }
 
-
 impl convert::Into<f64> for Tax {
     fn into(self) -> f64 {
         self.0.into_inner()
     }
 }
-
 
 impl convert::From<f64> for Tax {
     fn from(value: f64) -> Tax {

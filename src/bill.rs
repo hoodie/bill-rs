@@ -1,7 +1,7 @@
 #[cfg(feature = "serde")]
 use serde::Serialize;
 
-use super::{Money, Amount, ItemList, BillItem, BillProduct};
+use super::{Amount, BillItem, BillProduct, ItemList, Money};
 use crate::tax::Tax;
 
 use std::collections::BTreeMap;
@@ -24,7 +24,9 @@ impl<P: BillProduct> Deref for Bill<P> {
 impl<P: BillProduct> Bill<P> {
     /// Instantiates a new `Bill`
     pub fn new() -> Self {
-        Bill { items_by_tax: BTreeMap::new() }
+        Bill {
+            items_by_tax: BTreeMap::new(),
+        }
     }
 
     pub fn to_items_with_tax(&self) -> BTreeMap<Tax, &BillItem<P>> {
@@ -44,21 +46,24 @@ impl<P: BillProduct> Bill<P> {
 
     /// Returns a `Vec` of `BillItem`
     pub fn as_items(&self) -> Vec<&BillItem<P>> {
-        self.as_items_with_tax().into_iter().map(|(_, item)| item).collect()
+        self.as_items_with_tax()
+            .into_iter()
+            .map(|(_, item)| item)
+            .collect()
     }
 
     /// Adds a new `BillItem` to the list.
     pub fn add(&mut self, item: BillItem<P>) {
         let tax = item.product.tax();
-        self.items_by_tax.entry(tax).or_insert_with(ItemList::new).push(item);
+        self.items_by_tax
+            .entry(tax)
+            .or_insert_with(ItemList::new)
+            .push(item);
     }
 
     /// Instantiates and adds a new `BillItem` to the list.
     pub fn add_item(&mut self, amount: Amount, product: P) {
-        let item = BillItem {
-            amount,
-            product,
-        };
+        let item = BillItem { amount, product };
 
         self.add(item)
     }
