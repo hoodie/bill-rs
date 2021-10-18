@@ -64,9 +64,9 @@ impl fmt::Display for Tax {
     }
 }
 
-impl convert::Into<f64> for Tax {
-    fn into(self) -> f64 {
-        self.0.into_inner()
+impl From<Tax> for f64 {
+    fn from(val: Tax) -> Self {
+        val.0.into_inner()
     }
 }
 
