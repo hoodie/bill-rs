@@ -35,16 +35,16 @@ fn print(title: &str, bill: &Bill<Product<'_>>) {
 }
 
 fn main() {
-    let coffee = Product::new("Coffee", c(0250), 0.19);
-    let tee = Product::new("Tea", c(0175), 0.19);
-    let water = Product::new("Water", c(0061), 0.19);
-    let applejuice = Product::new("AppleJuice", c(0164), 0.19);
-    let orangejuice = Product::new("OrangeJuice", c(0186), 0.19);
-    let bagel = Product::new("Bagel", c(0219), 0.19);
-    let sandwich = Product::new("Sandwich", c(0340), 0.19);
-    let pie = Product::new("pie", c(0094), 0.19);
-    let soup = Product::new("Soup", c(0310), 0.19);
-    let service = Product::new("Service", c(0800), 0.00);
+    let coffee = Product::new("Coffee", c(250), 0.19);
+    let tee = Product::new("Tea", c(175), 0.19);
+    let water = Product::new("Water", c(61), 0.19);
+    let applejuice = Product::new("AppleJuice", c(164), 0.19);
+    let orangejuice = Product::new("OrangeJuice", c(186), 0.19);
+    let bagel = Product::new("Bagel", c(219), 0.19);
+    let sandwich = Product::new("Sandwich", c(340), 0.19);
+    let pie = Product::new("pie", c(94), 0.19);
+    let soup = Product::new("Soup", c(310), 0.19);
+    let service = Product::new("Service", c(800), 0.00);
 
     let mut offer = Bill::new();
     offer.add_item(8., water);
