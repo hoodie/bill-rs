@@ -1,10 +1,14 @@
 # 💸 Bill
 
-[![Travis](https://img.shields.io/travis/hoodie/bill-rs.svg)](https://travis-ci.org/hoodie/bill-rs/)
-[![license](https://img.shields.io/crates/l/bill.svg)](https://crates.io/crates/bill/)
-[![Crates.io](https://img.shields.io/crates/d/bill.svg)](https://crates.io/crates/bill)
-[![version](https://img.shields.io/crates/v/bill.svg)](https://crates.io/crates/bill/)
-[![documentation](https://docs.rs/bill/badge.svg)](https://docs.rs/bill/)
+[![build](https://img.shields.io/github/actions/workflow/status/hoodie/bill-rs/ci.yml?branch=main)](https://github.com/hoodie/bill-rs/actions?query=workflow%3A"Continuous+Integration")
+[![Crates.io](https://img.shields.io/crates/d/bill)](https://crates.io/crates/bill)
+[![contributors](https://img.shields.io/github/contributors/hoodie/bill-rs)](https://github.com/hoodie/bill-rs/graphs/contributors)
+![maintenance](https://img.shields.io/maintenance/yes/2023)
+
+[![version](https://img.shields.io/crates/v/bill)](https://crates.io/crates/bill/)
+[![documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/bill/)
+[![license](https://img.shields.io/crates/l/bill.svg?style=flat)](https://crates.io/crates/bill/)
+
 
 Tiny little billing library.
 
