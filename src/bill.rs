@@ -77,22 +77,22 @@ impl<P: BillProduct> Bill<P> {
 
     pub fn gross_total(&self) -> Money {
         self.items_by_tax
-            .iter()
-            .map(|(_, items)| items.gross_sum())
+            .values()
+            .map(|items| items.gross_sum())
             .fold(Money::default(), |acc, x| acc + x)
     }
 
     pub fn tax_total(&self) -> Money {
         self.items_by_tax
-            .iter()
-            .map(|(_, items)| items.tax_sum())
+            .values()
+            .map(|items| items.tax_sum())
             .fold(Money::default(), |acc, x| acc + x)
     }
 
     pub fn net_total(&self) -> Money {
         self.items_by_tax
-            .iter()
-            .map(|(_, items)| items.net_sum())
+            .values()
+            .map(|items| items.net_sum())
             .fold(Money::default(), |acc, x| acc + x)
     }
 }
