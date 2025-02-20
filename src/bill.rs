@@ -57,7 +57,7 @@ impl<P: BillProduct> Bill<P> {
         let tax = item.product.tax();
         self.items_by_tax
             .entry(tax)
-            .or_insert_with(ItemList::new)
+            .or_default()
             .push(item);
     }
 

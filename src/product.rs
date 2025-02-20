@@ -56,7 +56,7 @@ pub trait BillProduct {
     fn tax(&self) -> Tax;
 }
 
-impl<'a> BillProduct for Product<'a> {
+impl BillProduct for Product<'_> {
     fn price(&self) -> Money {
         self.price
     }
